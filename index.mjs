@@ -1,1 +1,1 @@
-export { sniffer, middleware } from './src/lib/index.js';
+export { sniffer, middleware } from './src/index.js';
