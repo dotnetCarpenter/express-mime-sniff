@@ -3,7 +3,11 @@ import S            from 'sanctuary';
 import eventEmitter from './eventEmitter.js';
 
 // const trace = tag => x => (console.log (tag, x), x)
-const sliceAfterSpace = S.ap (s => n => s.slice (n + 1)) (s => s.indexOf (' '));
+const sliceAfterSpace = S.pipe ([
+  String,
+  S.ap (s => n => s.slice (n + 1)) (s => s.indexOf (' ')),
+  S.trim,
+]);
 
 const sniffer = path => ({
   ...eventEmitter (new Map),
@@ -22,8 +26,10 @@ const sniffer = path => ({
 
 // test
 // FIXME: this API sucks! We do not want to set `on` manually but rather as a second argument
+const charCode = char => char.charCodeAt (0)
+const toArrayBuffer = buffer => buffer.buffer
 const getMimeType = sniffer ('./tests/fixtures/t-ssm.jpg');
-getMimeType.on ('mime', S.compose (console.log) (String));
+getMimeType.on ('mime', console.log);
 getMimeType.mimeType ();
 
 /*
