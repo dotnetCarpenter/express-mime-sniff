@@ -23,12 +23,13 @@ const sniffer = path => ({
   },
 })
 
+const middleware = S.identity;
 
 // test
 // FIXME: this API sucks! We do not want to set `on` manually but rather as a second argument
 const charCode = char => char.charCodeAt (0)
 const toArrayBuffer = buffer => buffer.buffer
-const getMimeType = sniffer ('./tests/fixtures/t-ssm.jpg');
+const getMimeType = sniffer ('./specs/fixtures/t-ssm.jpg');
 getMimeType.on ('mime', console.log);
 getMimeType.mimeType ();
 
@@ -46,3 +47,5 @@ file.on('close', (code) => {
 });
 
 */
+
+export { sniffer, middleware };
