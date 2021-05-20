@@ -1,6 +1,8 @@
 import S           from 'sanctuary';
 import { sniffer } from './lib/sniffer.js';
 
+const { pipe } = S;
+
 const setMimeType = response => mimeType => {
   if (response.headersSent) return;
 
@@ -9,14 +11,14 @@ const setMimeType = response => mimeType => {
     'X-Content-Type-Options': 'nosniff'
   });
 };
+
 const middleware = (request, response, next) => {
-//  console.debug (request.path.slice (1));
-  const happyPath = S.pipe ([
+  const happyPath = pipe ([
     setMimeType (response),
     next,
   ]);
 
-  const sadPath = S.pipe ([
+  const sadPath = pipe ([
      console.error,
      next,
   ]);
