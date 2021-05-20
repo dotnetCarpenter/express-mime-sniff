@@ -1,6 +1,6 @@
 import { spawn }    from 'child_process';
 import S            from 'sanctuary';
-import eventEmitter from './lib/eventEmitter.js';
+import eventEmitter from './eventEmitter.js';
 
 const EVENT_NAME = 'mime';
 const ERROR_EVENT_NAME = 'error';
@@ -26,35 +26,10 @@ const sniffer = errorHandler => f => path => {
   file.stdout.on ('data', program);
 }
 
-const setMimeType = response => mimeType => {
-  if (response.headersSent) return;
-
-  response.set ({
-    'Content-Type': mimeType,
-    'X-Content-Type-Options': 'nosniff'
-  });
-};
-const middleware = (request, response, next) => {
-  const happyPath = S.pipe ([
-    setMimeType (response),
-    next,
-  ]);
-
-  const sadPath = S.pipe ([
-     console.error,
-     next,
-  ]);
-
-  sniffer
-    (sadPath)
-    (happyPath)
-    (request.path.slice (1));
-};
-
 // test
 //sniffer
 //  (S.pipe ([console.error, () => process.exit(1)]))
 //  (console.log)
 //  ('spec/fixtures/t-ssm.jpg');
 
-export { sniffer, middleware };
+export { sniffer };
