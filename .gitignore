@@ -1,1 +1,7 @@
+# nano editor files
+*.save
+*.save.*
+*.swp
+# npm stuff
 node_modules/
+
