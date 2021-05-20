@@ -1,9 +1,4 @@
-import express from 'express';
-import { sniffer, middleware } from '../index.mjs';
-
-const app = express ();
-
-//const trace = tag => x => (console.log (tag, x), x)
+import { sniffer } from '../index.mjs';
 
 describe ('sniffer', () => {
 
@@ -16,7 +11,7 @@ describe ('sniffer', () => {
     return expectAsync (actual).toBeResolvedTo (expected);
   });
 
-  it ('should only trigger "error" when given wrong path', () => {
+  it ('should **only** trigger "error" when given wrong path', () => {
     const wrongPath = '/nothing.gif';
     const actual    = new Promise ((resolve, reject) => {
       sniffer (reject) (resolve) (wrongPath);
@@ -26,7 +21,4 @@ describe ('sniffer', () => {
   });
 
 });
-
-
-//app.use (middleware)
 
