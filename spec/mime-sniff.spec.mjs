@@ -18,12 +18,11 @@ describe ('sniffer', () => {
 
   it ('should only trigger "error" when given wrong path', () => {
     const wrongPath = '/nothing.gif';
-    const expected  = `cannot open \`${wrongPath}' (No such file or directory)`;
     const actual    = new Promise ((resolve, reject) => {
       sniffer (reject) (resolve) (wrongPath);
     });
 
-    return expectAsync (actual).toBeResolvedTo (expected);
+    return expectAsync (actual).toBeRejected ();
   });
 
 });
