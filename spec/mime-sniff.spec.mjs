@@ -10,7 +10,7 @@ describe ('sniffer', () => {
   it ('should detect correct png mime-type for .jpg extension', () => {
     const expected = 'image/png; charset=binary';
     const actual   = new Promise ((resolve, reject) => {
-      sniffer (resolve) ('spec/fixtures/t-ssm.jpg');
+      sniffer (reject) (resolve) ('spec/fixtures/t-ssm.jpg');
     });
 
     return expectAsync (actual).toBeResolvedTo (expected);
@@ -20,7 +20,7 @@ describe ('sniffer', () => {
     const wrongPath = '/nothing.gif';
     const expected  = `cannot open \`${wrongPath}' (No such file or directory)`;
     const actual    = new Promise ((resolve, reject) => {
-      sniffer (resolve) (wrongPath);
+      sniffer (reject) (resolve) (wrongPath);
     });
 
     return expectAsync (actual).toBeResolvedTo (expected);
