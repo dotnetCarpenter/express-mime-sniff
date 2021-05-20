@@ -7,8 +7,8 @@ let app;
 
 beforeAll (() => {
   app = express ();
-  app.use (middleware);
-  app.use (express.static('.'));
+  app.use (middleware ());
+  app.use (express.static ('.'));
   app.listen (PORT);
 });
 

@@ -1,3 +1,4 @@
+import path        from 'path';
 import S           from 'sanctuary';
 import { sniffer } from './lib/sniffer.js';
 
@@ -12,7 +13,7 @@ const setMimeType = response => mimeType => {
   });
 };
 
-const middleware = (request, response, next) => {
+const middleware = (root = '') => (request, response, next) => {
   const happyPath = pipe ([
     setMimeType (response),
     next,
@@ -26,7 +27,7 @@ const middleware = (request, response, next) => {
   sniffer
     (sadPath)
     (happyPath)
-    (request.path.slice (1));
+    (path.resolve (root, request.path.slice (1)));
 };
 
 export { middleware };

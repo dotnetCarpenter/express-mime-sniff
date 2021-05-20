@@ -7,14 +7,13 @@ const receiveData = (data = '') => chunk => {
 
   return data;
 }
-//const t = receiveData ()
-//t ('hello')
-//t (' ')
-//t ('world')
-//console.log(t ())
 
-const PATH1 = 'http://localhost:8080/spec/fixtures/t-ssm.jpg';
+const ROOT = '.';
+//const ROOT = 'spec/fixtures';
+const PATH1 = 'http://localhost:8080/wrong/path.jpg';
 const PATH2 = 'http://localhost:8080/spec/fixtures/fake.jpg';
+const PATH3 = 'http://localhost:8080/fake.jpg';
+
 const request = path => {
   http.get (path, response => {
     const rawData = receiveData ()
@@ -22,17 +21,19 @@ const request = path => {
     response.on ('data', rawData);
     response.on ('end', () => {
       const responseBody = rawData ();
-      console.debug ('length:', responseBody.length);
+      const length = Buffer.byteLength(responseBody);
+
+      console.debug ('length:', length);
       console.debug ('headers', response.headers);
-      if (responseBody.length < 200) console.debug (responseBody);
+      if (length < 200) console.debug (responseBody);
     });
 
   }).on ('error', console.error);
 };
 
 const app = express ();
-app.use (middleware);
-app.use (express.static('.'));
+app.use (middleware (ROOT));
+app.use (express.static(ROOT));
 app.listen (8080);
 
-([PATH1, PATH2]).map (request);
+([PATH1, PATH2, PATH3]).map (request);

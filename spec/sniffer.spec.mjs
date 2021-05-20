@@ -1,6 +1,5 @@
 import { sniffer } from '../index.mjs';
 
-
 describe ('sniffer', () => {
 
   it ('should detect correct png mime-type for .jpg extension', () => {
