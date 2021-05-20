@@ -4,6 +4,11 @@
   "description": "",
   "module": "index.mjs",
   "type": "module",
+  "files": [
+    "src/lib/sniffer.js",
+    "src/middleware.js",
+    "index.mjs"
+  ],
   "scripts": {
     "test": "jasmine --color"
   },
