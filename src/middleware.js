@@ -10,6 +10,7 @@ const setMimeType = response => mimeType => {
   });
 };
 const middleware = (request, response, next) => {
+//  console.debug (request.path.slice (1));
   const happyPath = S.pipe ([
     setMimeType (response),
     next,

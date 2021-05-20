@@ -25,8 +25,15 @@ describe ('middleware', () => {
     return expectAsync (actual).toBeResolvedTo (expected);
   });
 
-  it ('should not handle 404 requests', () => {
-//    const 
-  });
+//  This test does not make sense since the client is never aware of the middleware.
+//  A test for this would need to involve spying on the middleware...
+//  it ('should not handle 404 requests', () => {
+//    return expectAsync (new Promise ((resolve, reject) => {
+//      http.get (`http://localhost:${PORT}/not-here`, response => {
+//        console.dir (response);
+//        resolve ();
+//      }).on ('error', reject);
+//    })).toBeRejected ();
+//  });
 
 });

@@ -21,9 +21,10 @@ const request = path => {
 
     response.on ('data', rawData);
     response.on ('end', () => {
-//      console.log (rawData ())
-      console.debug ('length:', rawData ().length);
+      const responseBody = rawData ();
+      console.debug ('length:', responseBody.length);
       console.debug ('headers', response.headers);
+      if (responseBody.length < 100) console.dir (responseBody);
     });
 
   }).on ('error', console.error);
