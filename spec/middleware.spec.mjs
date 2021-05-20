@@ -17,12 +17,16 @@ describe ('middleware', () => {
   it ('should handle an HTTP request', () => {
     const expected = 'image/png; charset=binary';
     const actual   = new Promise ((resolve, reject) => {
-      http.get (`http://localhost:${PORT}/spec/fixtures/t-ssm.jpg`, response => {
+      http.get (`http://localhost:${PORT}/spec/fixtures/fake.jpg`, response => {
         resolve (response.headers['content-type']);
       }).on ('error', reject);
     });
 
     return expectAsync (actual).toBeResolvedTo (expected);
+  });
+
+  it ('should not handle 404 requests', () => {
+//    const 
   });
 
 });

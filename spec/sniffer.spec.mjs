@@ -1,11 +1,12 @@
 import { sniffer } from '../index.mjs';
 
+
 describe ('sniffer', () => {
 
   it ('should detect correct png mime-type for .jpg extension', () => {
     const expected = 'image/png; charset=binary';
     const actual   = new Promise ((resolve, reject) => {
-      sniffer (reject) (resolve) ('spec/fixtures/t-ssm.jpg');
+      sniffer (reject) (resolve) ('spec/fixtures/fake.jpg');
     });
 
     return expectAsync (actual).toBeResolvedTo (expected);
