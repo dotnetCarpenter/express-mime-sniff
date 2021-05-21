@@ -10,7 +10,8 @@
     "index.mjs"
   ],
   "scripts": {
-    "test": "jasmine --color"
+    "test": "jasmine",
+    "test:watch": "watch -c npm test -- --color"
   },
   "keywords": [],
   "author": "",

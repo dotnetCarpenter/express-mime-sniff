@@ -1,9 +1,12 @@
 import http           from 'http';
 import express        from 'express';
 import { middleware } from '../index.mjs';
+import getContentType from './contentType.mjs';
 
 const PORT = 8081;
 const ROOT_PATH = 'spec/fixtures';
+
+const request = getContentType (PORT);
 let app;
 
 beforeAll (() => {
@@ -17,11 +20,7 @@ describe ('middleware with relative static path', () => {
 
   it ('should handle an HTTP request', () => {
     const expected = 'image/png; charset=binary';
-    const actual   = new Promise ((resolve, reject) => {
-      http.get (`http://localhost:${PORT}/fake.jpg`, response => {
-        resolve (response.headers['content-type']);
-      }).on ('error', reject);
-    });
+    const actual   = request ('fake.jpg');
 
     return expectAsync (actual).toBeResolvedTo (expected);
   });
