@@ -6,13 +6,15 @@ import getContentType from './contentType.mjs';
 
 const PORT = 8082;
 const ROOT_PATH = 'spec/fixtures/';
+const OPTIONS = { extensions: ['txt'] };
+
 const request = getContentType (PORT);
 
 let app;
 
 beforeAll (() => {
   app = express ();
-  app.use (middleware (ROOT_PATH));
+  app.use (middleware (ROOT_PATH, OPTIONS));
   app.use (express.static (ROOT_PATH));
   app.listen (PORT);
 });

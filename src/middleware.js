@@ -4,6 +4,8 @@ import { sniffer } from './lib/sniffer.js';
 
 const { pipe } = S;
 
+const trace = tag => x => (console.log (tag, x), x)
+
 const setMimeType = response => mimeType => {
   if (response.headersSent) return;
 
@@ -13,7 +15,28 @@ const setMimeType = response => mimeType => {
   });
 };
 
-const middleware = (root = '') => (request, response, next) => {
+const extname = p => path.extname (p);
+const removeLeadingDot = s => s.replace (/^\./, '');
+const getExtension= S.pipe ([
+  extname,
+  removeLeadingDot,
+]);
+//const hasExtension = ext => 
+
+const middleware = (root = '', options = {}) => (request, response, next) => {
+  if (options.extensions) console.debug ( // why does foldMap not work with Boolean??
+    S.foldMap
+      (Boolean)
+      (S.equals (getExtension (request.path)))
+      (options.extensions)
+//    S.foldMap (Boolean) (S.pipe ([
+//      removeLeadingDot,
+//      (pathExt => ext => ext === pathExt) (getExtension (request.path)),
+//    ])) (options.extensions)
+//    options.extensions.reduce (S.pipe ([removeLeadingDot, pathExt => ext => ext === pathExt]), getExtension (request.path))
+//    S.reduce (reqExt => ext => ext === true ? true : reqExt === ext) (getExtensionFromPath (request.path)) (options.extensions)
+  );
+
   const happyPath = pipe ([
     setMimeType (response),
     next,
