@@ -10,6 +10,10 @@ by [`express.static`][express.static] and should therefore yield better results.
 
 > Package status should be considered **alpha** at this point.
 
+express-mime-sniff uses [sanctuary][sanctuary], which by default does type
+checking. To disable type checking, and gain performance, you must set
+the enviroment variable: `NODE_ENV=production`.
+
 # API
 
 Version: `0.1.0`
@@ -28,18 +32,17 @@ Remember to use `middleware` before [`express.static`][express.static].
 import express        from 'express';
 import { middleware } from 'express-mime-sniff';
 
-const PORT = 8080;
 const app = express ();
 app.use (middleware ()); // important to use middleware before express.static
 app.use (express.static('.'));
-app.listen (PORT);
+app.listen (8080);
 ```
 
 ### serving content from another directory
 
-If you configure [`express.static`][express.static].
-to serve content from another directory than your current working directory, you need
-to tell the `middleware`. That is done in the exact same way as
+If you configure [`express.static`][express.static] to serve content from
+another directory than your current working directory, you need to tell the
+`middleware`. That is done in the exact same way as
 [`express.static`][express.static].
 
 ```js
@@ -101,3 +104,4 @@ More information with `man magic` or at https://www.darwinsys.com/file/.
 
 
 [express.static]: http://expressjs.com/en/4x/api.html#express.static
+[sanctuary]: https://sanctuary.js.org/
