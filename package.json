@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "BSD-2",
+  "license": "BSD-2-Clause",
   "peerDependencies": {
     "express": "^4.17.1"
   },
@@ -27,3 +27,4 @@
     "jasmine": "^3.7.0"
   }
 }
+

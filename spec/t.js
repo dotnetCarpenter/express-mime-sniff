@@ -13,6 +13,7 @@ const ROOT = '.';
 const PATH1 = 'http://localhost:8080/wrong/path.jpg';
 const PATH2 = 'http://localhost:8080/spec/fixtures/fake.jpg';
 const PATH3 = 'http://localhost:8080/fake.jpg';
+const PATH4 = 'http://localhost:8080/spec/fixtures/ost.txt';
 
 const request = path => {
   http.get (path, response => {
@@ -32,8 +33,8 @@ const request = path => {
 };
 
 const app = express ();
-app.use (middleware (ROOT));
+app.use (middleware (ROOT, { extensions: ['txt'] }));
 app.use (express.static(ROOT));
 app.listen (8080);
 
-([PATH1, PATH2, PATH3]).map (request);
+([PATH1, PATH2, PATH3, PATH4]).map (request);

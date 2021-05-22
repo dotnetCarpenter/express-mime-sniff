@@ -6,7 +6,7 @@ import getContentType from './contentType.mjs';
 
 const PORT = 8082;
 const ROOT_PATH = 'spec/fixtures/';
-const OPTIONS = { extensions: ['txt'] };
+const OPTIONS = { extensions: ['txt', 'htm'] };
 
 const request = getContentType (PORT);
 
@@ -21,7 +21,7 @@ beforeAll (() => {
 
 describe ('middleware', () => {
 
-  fit ('should be configured to only handle .txt files', () => {
+  it ('should be configured to only handle .txt files', () => {
     // fake.jpg is an png file but express.static thinks it's an jpeg'
     const urls = ['ascii.txt', 'ost.txt', 'fake.jpg'];
     const expected = ['text/plain; charset=us-ascii', 'text/plain; charset=utf-8', 'image/jpeg'];
