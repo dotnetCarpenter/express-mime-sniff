@@ -10,8 +10,8 @@ const receiveData = (data = '') => chunk => {
   return data;
 }
 
-// const ROOT = '.';
-const ROOT = 'spec/fixtures';
+const ROOT = '.';
+// const ROOT = 'spec/fixtures';
 const PATH1 = 'http://localhost:8080/wrong/path.jpg';
 const PATH2 = 'http://localhost:8080/spec/fixtures/fake.jpg';
 const PATH3 = 'http://localhost:8080/fake.jpg';
@@ -35,7 +35,7 @@ const request = path => {
 };
 
 const app = express ();
-app.use (middleware (ROOT, { filter: [/txt$/] }));
+app.use (middleware (ROOT, { filters: [/txt$/] }));
 app.use (express.static(ROOT, { fallthrough: false }));
 app.listen (8080);
 

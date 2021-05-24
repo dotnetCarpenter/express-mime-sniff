@@ -5,7 +5,7 @@ import getContentType from './contentType.mjs';
 
 const PORT = 8082;
 const ROOT_PATH = 'spec/fixtures/';
-const OPTIONS = { filter: [/\.txt$/, /\.png$/] };
+const OPTIONS = { filters: [/\.txt$/, /\.png$/] };
 
 const request = getContentType (PORT);
 
