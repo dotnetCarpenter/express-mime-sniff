@@ -16,27 +16,39 @@ const setMimeType = response => mimeType => {
 };
 
 // shouldHandle :: Array a -> Boolean b
-const emptyArray = S.pipe ([
-  S.prop ('length'),
-  S.equals (0)
-]);
+// const emptyArray = S.pipe ([
+//   S.prop ('length'),
+//   S.equals (0)
+// ]);
+
 
 const middleware = (root = '', options = {}) => (request, response, next) => {
   console.debug (
     request.path,
-    options.filter && S.flip (S.test) (request.path) (options.filter[0]),
-    options.filter && S.filter (S.flip (S.test) (request.path)) (options.filter),
-    options.filter && S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter)),
-    options.filter && S.equals (0) (S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter))),
+    // options.filter && S.flip (S.test) (request.path) (options.filter[0]),
+    // options.filter && S.filter (S.flip (S.test) (request.path)) (options.filter),
+    // options.filter && S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter)),
+    // options.filter && S.equals (0) (S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter))),
   );
 
   if (options.filter) {
-    const shouldIgnore = S.pipe ([
-      S.filter (S.flip (S.test) (request.path)),
-      emptyArray
+    // find_ :: String a -> Maybe b
+    const find_ = S.pipe ([
+      S.flip (S.test),
+      S.flip (S.find) (options.filter),
     ]);
 
-    if (shouldIgnore (options.filter)) {
+    console.debug (
+     find_ (request.path),
+     S.isNothing (find_ (request.path))
+    );
+
+    // const shouldIgnore = S.pipe ([
+    //   S.filter (S.flip (S.test) (request.path)),
+    //   emptyArray
+    // ]);
+
+    if (S.isNothing (find_ (request.path))) {
       return next ();
     }
   }
