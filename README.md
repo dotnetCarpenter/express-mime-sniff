@@ -16,7 +16,7 @@ the enviroment variable: `NODE_ENV=production`.
 
 # API
 
-Version: `0.1.0`
+Version: `0.2.0`
 
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)
