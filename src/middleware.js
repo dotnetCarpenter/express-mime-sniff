@@ -16,6 +16,14 @@ const setMimeType = response => mimeType => {
 };
 
 const middleware = (root = '', options = {}) => (request, response, next) => {
+  // console.debug (
+  //   'path', request.path,
+  //   'baseUrl', request.baseUrl,
+  //   'mountpath', request.app.mountpath,
+  //   'root', root,
+  //   path.resolve (root, (request.baseUrl || request.path).slice (1))
+  // )
+
   if (options.filters) {
     // find_ :: String a -> Maybe b
     const find_ = S.pipe ([
