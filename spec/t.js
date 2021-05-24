@@ -35,7 +35,7 @@ const request = path => {
 };
 
 const app = express ();
-app.use (middleware (ROOT, { extensions: ['txt'] }));
+app.use (middleware (ROOT, { filter: [/txt$/] }));
 app.use (express.static(ROOT, { fallthrough: false }));
 app.listen (8080);
 

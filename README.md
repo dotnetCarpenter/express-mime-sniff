@@ -64,12 +64,12 @@ If you are unhappy with the `middleware` you can write your own, using `sniffer`
 import S from 'sanctuary';
 import { sniffer } from 'express-mime-sniff';
 
-// sniffer :: String Error, String MimeType, String Path => (Error -> Void) -> (MimeType -> Void) -> Path -> Void
 /* @typedef sniffer
- * @param {{ (String: a):Void }} errorHandler Function that will handle an error.
- * @param {{ (String: b):Void }} successHandler Function that will get mime-type for `path`.
- * @param {String} path Path to the file you want the mime-type for.
- * @returns {Void}
+ * sniffer :: String Error, String MimeType, String Path => (Error -> void) -> (MimeType -> void) -> Path -> void
+ * @param {{ (string: error):void }} errorHandler Function that will handle an error.
+ * @param {{ (string: mimeType):void }} successHandler Function that will get mime-type for `path`.
+ * @param {string} path Path to the file you want the mime-type for.
+ * @returns {void}
  */
 
 const test = sniffer

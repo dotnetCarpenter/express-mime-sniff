@@ -15,15 +15,30 @@ const setMimeType = response => mimeType => {
   });
 };
 
-const removeLeadingDot = s => s.replace (/^\./, '');
-const getExtension= S.pipe ([
-  path.extname,
-  removeLeadingDot,
+// shouldHandle :: Array a -> Boolean b
+const emptyArray = S.pipe ([
+  S.prop ('length'),
+  S.equals (0)
 ]);
 
 const middleware = (root = '', options = {}) => (request, response, next) => {
-  if (options.extensions && S.not (S.elem (getExtension (request.path)) (options.extensions))) {
-    return next ();
+  console.debug (
+    request.path,
+    options.filter && S.flip (S.test) (request.path) (options.filter[0]),
+    options.filter && S.filter (S.flip (S.test) (request.path)) (options.filter),
+    options.filter && S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter)),
+    options.filter && S.equals (0) (S.prop ('length') (S.filter (S.flip (S.test) (request.path)) (options.filter))),
+  );
+
+  if (options.filter) {
+    const shouldIgnore = S.pipe ([
+      S.filter (S.flip (S.test) (request.path)),
+      emptyArray
+    ]);
+
+    if (shouldIgnore (options.filter)) {
+      return next ();
+    }
   }
 
   const happyPath = pipe ([

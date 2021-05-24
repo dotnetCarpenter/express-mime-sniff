@@ -16,6 +16,11 @@ const program = S.pipe ([
 ]);
 
 // sniffer :: String Error, String MimeType, String Path => (Error -> Void) -> (MimeType -> Void) -> Path -> Void
+/**
+ *
+ * @param {{ (string: a):void }} errorHandler
+ * @returns {{ () }}
+ */
 const sniffer = errorHandler => successHandler => path => {
   const file = spawn ('file', ['--mime', '-E', path]);
 
