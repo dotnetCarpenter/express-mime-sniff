@@ -1,4 +1,3 @@
-import http           from 'http';
 import express        from 'express';
 import { middleware } from '../index.mjs';
 import getContentType from './contentType.mjs';
