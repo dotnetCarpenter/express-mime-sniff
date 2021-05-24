@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
 import S from 'sanctuary';
-const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = S;
+const { ap, trim, ifElse, Left, Right, compose, bimap } = S;
 
 //const trace = tag => x => (console.log (tag, x), x)
 
@@ -15,12 +15,7 @@ const program = S.pipe ([
   ifElse (s => s.indexOf ('ERROR') > -1) (Left) (Right),
 ]);
 
-// sniffer :: String Error, String MimeType, String Path => (Error -> Void) -> (MimeType -> Void) -> Path -> Void
-/**
- *
- * @param {{ (string: a):void }} errorHandler
- * @returns {{ () }}
- */
+// sniffer :: String Error, String MimeType, String Path => (Error -> void) -> (MimeType -> void) -> Path -> void
 const sniffer = errorHandler => successHandler => path => {
   const file = spawn ('file', ['--mime', '-E', path]);
 

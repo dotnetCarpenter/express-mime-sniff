@@ -2,8 +2,9 @@
 
 -------------------------------------------------------------------------------
 
-express-mime-sniff is a package for setting HTTP `Content-Type` headers for
-files by utilizing a *nix `file` program available on your system.
+express-mime-sniff is an [express package](http://expressjs.com/) for setting
+HTTP `Content-Type` headers for files by utilizing a *nix `file` program
+available on your system.
 
 This approach is independent of file extension, unlike the default logic used
 by [`express.static`][express.static] and should therefore yield better results.
@@ -42,16 +43,31 @@ app.listen (8080);
 
 If you configure [`express.static`][express.static] to serve content from
 another directory than your current working directory, you need to tell the
-`middleware`. That is done in the exact same way as
+`middleware`. That is done in the exact same way as with
 [`express.static`][express.static].
 
 ```js
 const ROOT_PATH = 'specify/the/root/directory/from/which/to/serve/static/assets';
 const app = express ();
+
 app.use (middleware (ROOT_PATH));
 app.use (express.static (ROOT_PATH));
+app.listen (8080);
 ```
 
+### options
+
++ `middleware (ROOT_PATH, { filters })` Add an array of regular expressions to filter which files _express-mime-sniff_ should handle. The RegExp will be tested against [`request.path`](http://expressjs.com/en/4x/api.html#req.path).
+
+```js
+const ROOT_PATH = 'spec/fixtures/';
+const OPTIONS = { filters: [/\.txt$/, /\.png$/] };
+
+app = express ();
+app.use (middleware (ROOT_PATH, OPTIONS));
+app.use (express.static (ROOT_PATH));
+app.listen (8080);
+```
 
 ## sniffer
 
