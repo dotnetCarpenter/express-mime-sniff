@@ -41,7 +41,7 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
   sniffer
     (sadPath)
     (happyPath)
-    (path.resolve (root, request.path.slice (1)));
+    (path.resolve (root, (request.baseUrl || request.path).slice (1)));
 };
 
 export { middleware };
