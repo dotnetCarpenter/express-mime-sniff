@@ -6,10 +6,15 @@ const { pipe } = S;
 
 // const trace = tag => x => (console.log (tag, x), x)
 
+/**
+ * Set "Content-Type": `mimeType` on a `response`.
+ * @param {import ('express').Response} response
+ * @returns {{ (mimeType:string):void }}
+ */
 const setMimeType = response => mimeType => {
   if (response.headersSent) return;
 
-  response.set ({
+  response.header ({
     'Content-Type': mimeType,
     'X-Content-Type-Options': 'nosniff'
   });

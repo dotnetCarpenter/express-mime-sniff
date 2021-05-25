@@ -1,14 +1,15 @@
 import { spawn } from 'child_process';
 import S from 'sanctuary';
-const { ap, trim, ifElse, Left, Right, compose, bimap } = S;
+const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = S;
 
 //const trace = tag => x => (console.log (tag, x), x)
 
 // sliceAfterSpace :: String -> String
 const sliceAfterSpace = ap (s => n => s.slice (n + 1)) (s => s.indexOf (' '));
 
-// program :: Buffer -> Either (Error, String)
-const program = S.pipe ([
+// program :: Error String => Buffer -> Either (Error, String)
+const program = pipe ([
+  //@ts-ignore
   sliceAfterSpace,
   String,
   trim,
