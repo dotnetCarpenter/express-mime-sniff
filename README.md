@@ -12,7 +12,7 @@ by [`express.static`][express.static] and should therefore yield better results.
 
 **express-mime-sniff** uses [sanctuary][sanctuary], which by default does type
 checking. To disable type checking, and gain performance, you must set
-the enviroment variable: `NODE_ENV=production`.
+the environment variable: `NODE_ENV=production`.
 
 # API
 
