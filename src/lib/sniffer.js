@@ -4,12 +4,12 @@ const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = S;
 
 //const trace = tag => x => (console.log (tag, x), x)
 
-// sliceAfterSpace :: String -> String
+// sliceAfterSpace :: String|Buffer -> String
 const sliceAfterSpace = ap (s => n => s.slice (n + 1)) (s => s.indexOf (' '));
 
-// program :: Error String => Buffer -> Either (Error, String)
+// program :: Buffer -> Either (Left String, Right String)
 const program = pipe ([
-  //@ts-ignore
+  // @ts-ignore
   sliceAfterSpace,
   String,
   trim,

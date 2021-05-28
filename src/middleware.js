@@ -2,15 +2,8 @@ import path        from 'path';
 import S           from 'sanctuary';
 import { sniffer } from './lib/sniffer.js';
 
-const { pipe } = S;
-
 // const trace = tag => x => (console.log (tag, x), x)
 
-/**
- * Set "Content-Type": `mimeType` on a `response`.
- * @param {import ('express').Response} response
- * @returns {{ (mimeType:string):void }}
- */
 const setMimeType = response => mimeType => {
   if (response.headersSent) return;
 
@@ -41,12 +34,12 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
     }
   }
 
-  const happyPath = pipe ([
+  const happyPath = S.pipe ([
     setMimeType (response),
     next,
   ]);
 
-  const sadPath = pipe ([
+  const sadPath = S.pipe ([
      console.error,
      next,
   ]);
