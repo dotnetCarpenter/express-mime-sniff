@@ -1,7 +1,7 @@
-import http           from 'http';
-import express        from 'express';
-import { middleware } from '../index.mjs';
-import getContentType from './contentType.mjs';
+const http = require ('http');
+const express = require ('express');
+const { middleware } = require ('..');
+const getContentType = require ('./contentType.js');
 
 const PORT = 8081;
 const ROOT_PATH = 'spec/fixtures';

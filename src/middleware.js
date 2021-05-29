@@ -1,6 +1,6 @@
-import path        from 'path';
-import S           from 'sanctuary';
-import { sniffer } from './lib/sniffer.js';
+const path = require ('path');
+const { pipe, flip, test, find, isNothing } = require ('sanctuary');
+const sniffer = require ('./lib/sniffer.js');
 
 // const trace = tag => x => (console.log (tag, x), x)
 
@@ -24,22 +24,22 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
 
   if (options.filters) {
     // find_ :: String a -> Maybe b
-    const find_ = S.pipe ([
-      S.flip (S.test),
-      S.flip (S.find) (options.filters),
+    const find_ = pipe ([
+      flip (test),
+      flip (find) (options.filters),
     ]);
 
-    if (S.isNothing (find_ (request.path))) {
+    if (isNothing (find_ (request.path))) {
       return next ();
     }
   }
 
-  const happyPath = S.pipe ([
+  const happyPath = pipe ([
     setMimeType (response),
     next,
   ]);
 
-  const sadPath = S.pipe ([
+  const sadPath = pipe ([
      console.error,
      next,
   ]);
@@ -50,4 +50,4 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
     (path.resolve (root, (request.baseUrl || request.path).slice (1)));
 };
 
-export { middleware };
+module.exports = middleware;

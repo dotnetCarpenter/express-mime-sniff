@@ -1,8 +1,8 @@
-import http           from 'http';
-import express        from 'express';
+const http = require ('http');
+const express = require ('express');
 import S              from 'sanctuary';
 import $              from 'sanctuary-def';
-import { middleware } from '../index.mjs';
+const { middleware } = require ('..');
 
 const receiveData = (data = '') => chunk => {
   if (chunk != null) data += chunk;

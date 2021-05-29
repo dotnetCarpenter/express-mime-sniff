@@ -8,6 +8,10 @@ program available on your system.
 This approach is independent of file extension, unlike the default logic used
 by [`express.static`][express.static] and should therefore yield better results.
 
+```
+$ npm install express-mime-sniff --production --save
+```
+
 > **express-mime-sniff** should be considered **alpha** at this point.
 
 **express-mime-sniff** uses [sanctuary][sanctuary], which by default does type
@@ -16,7 +20,7 @@ the environment variable: `NODE_ENV=production`.
 
 # API
 
-Version: `0.2.0`
+Version: `0.3.0`
 
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)
@@ -37,13 +41,13 @@ middleware function.
 Remember to use `middleware` before [`express.static`][express.static].
 
 ```js
-import express        from 'express';
-import { middleware } from '**express-mime-sniff**';
+import express        from 'express'
+import { middleware } from 'express-mime-sniff'
 
-const app = express ();
-app.use (middleware ()); // important to use middleware before express.static
-app.use (express.static('.'));
-app.listen (8080);
+const app = express ()
+app.use (middleware ()) // important to use middleware before express.static
+app.use (express.static('.'))
+app.listen (8080)
 ```
 
 ### serving content from another directory
@@ -54,12 +58,12 @@ another directory than your current working directory, you need to tell the
 [`express.static`][express.static].
 
 ```js
-const ROOT_PATH = 'specify/the/root/directory/from/which/to/serve/static/assets';
-const app = express ();
+const ROOT_PATH = 'specify/the/root/directory/from/which/to/serve/static/assets'
+const app = express ()
 
-app.use (middleware (ROOT_PATH));
-app.use (express.static (ROOT_PATH));
-app.listen (8080);
+app.use (middleware (ROOT_PATH))
+app.use (express.static (ROOT_PATH))
+app.listen (8080)
 ```
 
 ### options.filters
@@ -69,13 +73,13 @@ filter which files **express-mime-sniff** should handle. The RegExp will be
 tested against [`request.path`](http://expressjs.com/en/4x/api.html#req.path).
 
 ```js
-const ROOT_PATH = 'spec/fixtures/';
-const OPTIONS = { filters: [/\.txt$/, /\.png$/] };
+const ROOT_PATH = 'spec/fixtures/'
+const OPTIONS = { filters: [/\.txt$/, /\.png$/] }
 
-app = express ();
-app.use (middleware (ROOT_PATH, OPTIONS));
-app.use (express.static (ROOT_PATH));
-app.listen (8080);
+app = express ()
+app.use (middleware (ROOT_PATH, OPTIONS))
+app.use (express.static (ROOT_PATH))
+app.listen (8080)
 ```
 
 Or you can use the built-in
@@ -84,12 +88,12 @@ that express requires that the RegExp matches the entire path to the file or
 the wrong path will be sent to **express-mime-sniff**.
 
 ```js
-const ROOT_PATH = 'spec/fixtures/';
+const ROOT_PATH = 'spec/fixtures/'
 
-app = express ();
-app.use ([/.*\.txt$/, /.*\.png$/], middleware (ROOT_PATH));
-app.use (express.static (ROOT_PATH));
-app.listen (8080);
+app = express ()
+app.use ([/.*\.txt$/, /.*\.png$/], middleware (ROOT_PATH))
+app.use (express.static (ROOT_PATH))
+app.listen (8080)
 ```
 
 ## sniffer
@@ -100,34 +104,34 @@ If you are unhappy with the `middleware` you can write your own, using `sniffer`
 > so it is included in the package, as a dependency.
 
 ```js
-import S from 'sanctuary';
-import { sniffer } from '**express-mime-sniff**';
+import S from 'sanctuary'
+import { sniffer } from 'express-mime-sniff'
 
 /* @typedef sniffer
  * sniffer :: String Error, String MimeType, String Path => (Error -> void) -> (MimeType -> void) -> Path -> void
- * @param {{ (string: error):void }} errorHandler Function that will handle an error.
- * @param {{ (string: mimeType):void }} successHandler Function that will get mime-type for `path`.
+ * @param {{ (string: error):any }} errorHandler Function that will handle an error.
+ * @param {{ (string: mimeType):any }} successHandler Function that will get mime-type for `path`.
  * @param {string} path Path to the file you want the mime-type for.
  * @returns {void}
  */
 
 const test = sniffer
   (S.pipe ([console.error, () => process.exit(1)])) // error callback
-  (console.log);                                    // success callback
+  (console.log)                                    // success callback
 
 // happy path
-test ('spec/fixtures/fake.jpg'); // -> "image/png; charset=binary"
+test ('spec/fixtures/fake.jpg') // -> "image/png charset=binary"
 
 // sad path
-test ('no-such-file.jpg');       // -> "ERROR: cannot stat `no-such-file.jpg' (No such file or directory)"
+test ('no-such-file.jpg')       // -> "ERROR: cannot stat `no-such-file.jpg' (No such file or directory)"
 ```
 
 ### wrap sniffer in Promise
 
 ```js
 const promise = new Promise ((resolve, reject) => {
-  sniffer (reject) (resolve) ('path/to/file');
-});
+  sniffer (reject) (resolve) ('path/to/file')
+})
 ```
 
 

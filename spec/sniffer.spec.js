@@ -1,4 +1,4 @@
-import { sniffer } from '../index.mjs';
+const { sniffer } = require ('..');
 
 describe ('sniffer', () => {
 
@@ -7,6 +7,8 @@ describe ('sniffer', () => {
     const actual   = new Promise ((resolve, reject) => {
       sniffer (reject) (resolve) ('spec/fixtures/fake.jpg');
     });
+
+    actual.catch (console.error);
 
     return expectAsync (actual).toBeResolvedTo (expected);
   });

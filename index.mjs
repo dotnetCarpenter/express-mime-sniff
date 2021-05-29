@@ -1,2 +1,5 @@
-export { sniffer }    from './src/lib/sniffer.js';
-export { middleware } from './src/middleware.js';
+import mimeSniff from './index.js';
+
+const { middleware, sniffer } = mimeSniff;
+
+export { middleware, sniffer };

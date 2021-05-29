@@ -5,19 +5,19 @@
   "types": "index.d.ts",
   "files": [
     "src/**/*",
-    "index.mjs",
-    "cjs/**/*",
-    "index.cjs"
+    "index.js",
+    "index.mjs"
   ],
-  "type": "module",
+  "type": "commonjs",
+  "main": "index.js",
   "exports": {
     "import": "./index.mjs",
-    "require": "./index.cjs"
+    "require": "./index.js"
   },
   "scripts": {
     "test": "jasmine",
     "test:watch": "watch -c npm test -- --color",
-    "build": "tsc -p tsconfig.cjs.json"
+    "test:integration": "jasmine spec/integration-test/test.mjs"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +32,6 @@
     "@types/node": "^15.6.1",
     "@types/sanctuary": "^3.0.3",
     "express": "^4.17.1",
-    "jasmine": "^3.7.0",
-    "typescript": "^4.2.4"
+    "jasmine": "^3.7.0"
   }
 }

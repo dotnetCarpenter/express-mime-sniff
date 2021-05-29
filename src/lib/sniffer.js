@@ -1,6 +1,5 @@
-import { spawn } from 'child_process';
-import S from 'sanctuary';
-const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = S;
+const { spawn } = require ('child_process');
+const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = require ('sanctuary');
 
 //const trace = tag => x => (console.log (tag, x), x)
 
@@ -30,4 +29,4 @@ const sniffer = errorHandler => successHandler => path => {
 //test ('spec/fixtures/fake.jpg');  // happy path
 //test ('no-such-file.jpg'); // sad path
 
-export { sniffer };
+module.exports = sniffer;

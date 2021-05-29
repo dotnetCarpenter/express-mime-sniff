@@ -1,11 +1,10 @@
-import express        from 'express';
-import { middleware } from '../index.mjs';
-import getContentType from './contentType.mjs';
+const express = require ('express');
+const { middleware } = require ('..');
+const getContentType = require ('./contentType.js');
 
 
-const PORT = 8082;
+const PORT = 8083;
 const ROOT_PATH = 'spec/fixtures/';
-const OPTIONS = { filters: [/\.txt$/, /\.png$/] };
 
 const request = getContentType (PORT);
 
@@ -13,7 +12,7 @@ let app;
 
 beforeAll (() => {
   app = express ();
-  app.use (middleware (ROOT_PATH, OPTIONS));
+  app.use ([/.*\.txt$/, /.*\.png$/], middleware (ROOT_PATH));
   app.use (express.static (ROOT_PATH));
   app.listen (PORT);
 });
