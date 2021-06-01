@@ -3,7 +3,8 @@
 
 **express-mime-sniff** is an [express](http://expressjs.com/) middleware for
 setting HTTP `Content-Type` headers for files by utilizing a *nix `file`
-program available on your system.
+program available on your system. **express-mime-sniff** is meant to be used
+together and before [`express.static`][express.static].
 
 This approach is independent of file extension, unlike the default logic used
 by [`express.static`][express.static] and should therefore yield better results.
@@ -36,7 +37,9 @@ Version: `0.3.0`
 The `middleware` will add `Content-Type` and `'X-Content-Type-Options': 'nosniff'`
 HTTP headers to all requests if successful. If an error occur, `middleware` will
 write to `stderr` and do nothing with the request but forward it to the next
-middleware function.
+middleware function. If HTTP-headers are already sent to the client in a
+previous middleware function, **express-mime-sniff** will do nothing but burn
+CPU cycles.
 
 Remember to use `middleware` before [`express.static`][express.static].
 
@@ -117,7 +120,7 @@ import { sniffer } from 'express-mime-sniff'
 
 const test = sniffer
   (S.pipe ([console.error, () => process.exit(1)])) // error callback
-  (console.log)                                    // success callback
+  (console.log)                                     // success callback
 
 // happy path
 test ('spec/fixtures/fake.jpg') // -> "image/png charset=binary"

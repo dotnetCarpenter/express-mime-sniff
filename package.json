@@ -15,7 +15,7 @@
     "require": "./index.js"
   },
   "scripts": {
-    "test": "jasmine",
+    "test": "jasmine && npm run test:integration",
     "test:watch": "watch -c npm test -- --color",
     "test:integration": "jasmine spec/integration-test/test.mjs"
   },

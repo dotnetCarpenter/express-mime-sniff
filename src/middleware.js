@@ -34,6 +34,8 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
     }
   }
 
+  if (options.haltOnError) {}
+
   const happyPath = pipe ([
     setMimeType (response),
     next,

@@ -1,4 +1,3 @@
-const http = require ('http');
 const express = require ('express');
 const { middleware } = require ('..');
 const getContentType = require ('./contentType.js');
