@@ -19,13 +19,16 @@ $ npm install express-mime-sniff --production --save
 checking. To disable type checking, and gain performance, you must set
 the environment variable: `NODE_ENV=production`.
 
+
 # API
 
-Version: `0.3.0`
+Version: `0.4.0`
 
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)
   - [options.filters](#optionsfilters)
+  - [options.fallthrough](#optionsfallthrough)
+  - [options.silent](#optionssilent)
 - [sniffer](#sniffer)
   - [wrap sniffer in Promise](#wrap-sniffer-in-promise)
 - [*nix file program](#nix-file-program)
@@ -71,7 +74,11 @@ app.listen (8080)
 
 ### options.filters
 
-+ `middleware (ROOT_PATH, { filters })` Add an array of regular expressions to
+```js
+middleware (ROOT_PATH, { filters })
+```
+
+Add an array of regular expressions to
 filter which files **express-mime-sniff** should handle. The RegExp will be
 tested against [`request.path`](http://expressjs.com/en/4x/api.html#req.path).
 
@@ -98,6 +105,48 @@ app.use ([/.*\.txt$/, /.*\.png$/], middleware (ROOT_PATH))
 app.use (express.static (ROOT_PATH))
 app.listen (8080)
 ```
+
+
+### options.fallthrough
+
+```js
+middleware (ROOT_PATH, { fallthrough: false })
+```
+
+The default value is `true`.
+
+The `fallthrough` option is modeled after serve-static's `fallthrough` option,
+and tells the middleware to forward any error to express (like file not found),
+if it is set to `false`.
+
+_From the serve-static documentation:_
+> Set the middleware to have client errors fall-through as just unhandled
+> requests, otherwise forward a client error. The difference is that client
+> errors like a bad request or a request to a non-existent file will cause
+> this middleware to simply `next()` to your next middleware when this value
+> is `true`. When this value is `false`, these errors (even 404s), will invoke
+> `next(err)`.
+>
+> Typically `true` is desired such that multiple physical directories can be
+mapped to the same web address or for routes to fill in non-existent files.
+>
+> The value `false` can be used if this middleware is mounted at a path that
+> is designed to be strictly a single file system directory, which allows for
+> short-circuiting 404s for less overhead. This middleware will also reply to
+> all methods.
+
+
+### options.silent
+
+```js
+middleware (ROOT_PATH, { silent: true })
+```
+
+The `silence` option will stop middleware from printing to stderr on error.
+
+If `silence` is set to `true` and `fallthough` is set to `false`, then express
+will print the error to stderr, cancelling out the effect. But still useful,
+since you would else get the error message printed twice.
 
 ## sniffer
 

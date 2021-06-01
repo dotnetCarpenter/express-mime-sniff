@@ -1,17 +1,19 @@
-const path = require ('path');
-const { pipe, flip, test, find, isNothing } = require ('sanctuary');
-const sniffer = require ('./lib/sniffer.js');
+'use strict'
 
-// const trace = tag => x => (console.log (tag, x), x)
+const path = require ('path')
+const { pipe, flip, test, find, isNothing, I } = require ('sanctuary')
+const sniffer = require ('./lib/sniffer.js')
+
+const trace = log => x => (log (x), x)
 
 const setMimeType = response => mimeType => {
-  if (response.headersSent) return;
+  if (response.headersSent) return
 
   response.header ({
     'Content-Type': mimeType,
     'X-Content-Type-Options': 'nosniff'
-  });
-};
+  })
+}
 
 const middleware = (root = '', options = {}) => (request, response, next) => {
   // console.debug (
@@ -22,34 +24,34 @@ const middleware = (root = '', options = {}) => (request, response, next) => {
   //   path.resolve (root, (request.baseUrl || request.path).slice (1))
   // )
 
+  // TODO: clean up options section - move out of middleware please
+
   if (options.filters) {
     // find_ :: String a -> Maybe b
     const find_ = pipe ([
       flip (test),
       flip (find) (options.filters),
-    ]);
+    ])
 
     if (isNothing (find_ (request.path))) {
-      return next ();
+      return next ()
     }
   }
 
-  if (options.haltOnError) {}
+  let sadPath = I
+  if (!options.silent) sadPath = trace (console.error)
+  if (options.fallthrough !== false) sadPath = pipe ([sadPath, _=>{}, next])
+  else sadPath = pipe ([sadPath, next]) // forward error
 
   const happyPath = pipe ([
     setMimeType (response),
     next,
-  ]);
-
-  const sadPath = pipe ([
-     console.error,
-     next,
-  ]);
+  ])
 
   sniffer
     (sadPath)
     (happyPath)
-    (path.resolve (root, (request.baseUrl || request.path).slice (1)));
-};
+    (path.resolve (root, (request.baseUrl || request.path).slice (1)))
+}
 
-module.exports = middleware;
+module.exports = middleware
