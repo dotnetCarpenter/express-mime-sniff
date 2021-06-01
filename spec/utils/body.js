@@ -1,17 +1,15 @@
 'use strict'
 
 const get  = require ('./get.js')
-
-const data = (data = '') => chunk => chunk
-  ? data += chunk
-  : data
+const receiveData = require ('./dataCollector.js')
 
 module.exports = port => path => new Promise ((resolve, reject) => {
-  const receiveData = data ()
+  const data = receiveData ()
+
   get
     (response => {
-      response.on ('data', receiveData)
-      response.on ('end', () => { resolve (receiveData ()) })
+      response.on ('data', data)
+      response.on ('end', () => { resolve (data ()) })
     })
     (port)
     (path).catch (reject)

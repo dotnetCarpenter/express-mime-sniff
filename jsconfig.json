@@ -2,5 +2,5 @@
 	"moduleResolution": "node",
 	"esModuleInterop": true,
 	"allowJs": true,
-	"checkJs": true,
+	"checkJs": true
 }

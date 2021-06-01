@@ -15,7 +15,7 @@
     "require": "./index.js"
   },
   "scripts": {
-    "test": "jasmine && npm run test:integration",
+    "test": "jasmine",
     "test:watch": "watch -c npm test -- --color",
     "test:integration": "jasmine spec/integration-test/test.mjs"
   },
@@ -23,7 +23,7 @@
   "author": "",
   "license": "BSD-2-Clause",
   "peerDependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.0"
   },
   "dependencies": {
     "sanctuary": "^3.1.0"
