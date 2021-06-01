@@ -1,7 +1,14 @@
-const http = require ('http');
+'use strict'
+
+const get  = require ('./get.js')
 
 module.exports = port => path => new Promise ((resolve, reject) => {
-  http.get (`http://localhost:${port}/${path}`, response => {
-    resolve (response.headers['content-type']);
-  }).on ('error', reject);
-}).catch (console.error);
+
+  get
+    (response => {
+      resolve (response.headers['content-type'])
+    })
+    (port)
+    (path).catch (reject)
+
+}).catch (console.error)
