@@ -2,5 +2,8 @@
 	"moduleResolution": "node",
 	"esModuleInterop": true,
 	"allowJs": true,
-	"checkJs": true
+	"checkJs": true,
+	"typeAcquisition": {
+		"include": ["jasmine", "node", "sanctuary"]
+	}
 }
