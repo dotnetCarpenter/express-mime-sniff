@@ -25,16 +25,12 @@ describe ('multiple middleware with relative static paths', () => {
     const expected = 'image/png; charset=binary'
     const actual   = request ('fake.jpg')
 
-    actual.catch (console.error)
-
     return expectAsync (actual).toBeResolvedTo (expected)
   })
 
   it ('should handle an HTTP request to spec/fixtures/subdir', () => {
     const expected = 'image/png; charset=binary'
     const actual   = request ('fake2.jpg')
-
-    actual.catch (console.error)
 
     return expectAsync (actual).toBeResolvedTo (expected)
   })

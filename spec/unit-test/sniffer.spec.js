@@ -8,8 +8,6 @@ describe ('sniffer', () => {
       sniffer (reject) (resolve) ('spec/fixtures/fake.jpg')
     })
 
-    actual.catch (console.error)
-
     return expectAsync (actual).toBeResolvedTo (expected)
   })
 
