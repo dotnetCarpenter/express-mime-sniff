@@ -1,7 +1,5 @@
 const http = require ('http');
 const express = require ('express');
-import S              from 'sanctuary';
-import $              from 'sanctuary-def';
 const { middleware } = require ('..');
 
 const receiveData = (data = '') => chunk => {
@@ -39,7 +37,7 @@ app.use (middleware (ROOT, { filters: [/txt$/] }));
 app.use (express.static(ROOT, { fallthrough: false }));
 app.listen (8080);
 
-([PATH1, PATH2, PATH3, PATH4]).map (request);
+([PATH1, PATH2, PATH3, PATH4]).forEach (request);
 // request (PATH3);
 
 // const OPTIONS = { extensions: ['txt', 'htm'] };

@@ -4,10 +4,10 @@ import getContentType from '../utils/contentType.js'
 
 
 describe ('express-mime-sniff used from a EcmaScript Module', () => {
-  let app, request
+  let request
 
   beforeAll (() => {
-    app = express ()
+    const app = express ()
     app.use (middleware ())
     app.use (express.static ('.'))
 
