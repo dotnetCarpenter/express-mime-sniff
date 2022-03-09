@@ -1,7 +1,10 @@
+// @ts-check
+
 'use strict'
+
 // TODO: perhaps execFile() is more efficient than spawn
 // https://devdocs.io/node/child_process#child_process.execFile()
-const { spawn } = require ('child_process')
+const { execFile, spawn } = require ('child_process')
 const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = require ('sanctuary')
 
 //const trace = tag => x => (console.log (tag, x), x)
@@ -9,8 +12,8 @@ const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = require ('sanctu
 // sliceAfterSpace :: String|Buffer -> String
 const sliceAfterSpace = ap (s => n => s.slice (n + 1)) (s => s.indexOf (' '))
 
-// program :: Buffer -> Either (Left String, Right String)
-const program = pipe ([
+// classifyResult :: Buffer -> Either (Left String, Right String)
+const classifyResult = pipe ([
   // @ts-ignore
   sliceAfterSpace,
   String,
@@ -19,10 +22,18 @@ const program = pipe ([
 ])
 
 // sniffer :: String Error, String MimeType, String Path => (Error -> void) -> (MimeType -> void) -> Path -> void
-const sniffer = errorHandler => successHandler => path => {
-  const file = spawn ('file', ['--mime', '-E', path])
+// sniffer :: (String -> Void) -> (String -> Void) -> String -> Void
+const sniffer = errorHandler => successHandler => {
+  const program = compose (bimap (errorHandler) (successHandler)) (classifyResult)
 
-  file.stdout.on ('data', compose (bimap (errorHandler) (successHandler)) (program))
+  return path => {
+    execFile ('file', ['--mime', '-E', path], (_, stdout) => {
+      program (stdout)
+    })
+
+    // const file = spawn ('file', ['--mime', '-E', path])
+    // file.stdout.on ('data', program)
+  }
 }
 
 // test
