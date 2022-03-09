@@ -2,9 +2,7 @@
 
 'use strict'
 
-// TODO: perhaps execFile() is more efficient than spawn
-// https://devdocs.io/node/child_process#child_process.execFile()
-const { execFile, spawn } = require ('child_process')
+const { spawn } = require ('child_process')
 const { ap, pipe, trim, ifElse, Left, Right, compose, bimap } = require ('sanctuary')
 
 //const trace = tag => x => (console.log (tag, x), x)
@@ -27,12 +25,8 @@ const sniffer = errorHandler => successHandler => {
   const program = compose (bimap (errorHandler) (successHandler)) (classifyResult)
 
   return path => {
-    execFile ('file', ['--mime', '-E', path], (_, stdout) => {
-      program (stdout)
-    })
-
-    // const file = spawn ('file', ['--mime', '-E', path])
-    // file.stdout.on ('data', program)
+    const file = spawn ('file', ['--mime', '-E', path])
+    file.stdout.on ('data', program)
   }
 }
 
