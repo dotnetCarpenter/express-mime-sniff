@@ -1,7 +1,16 @@
 'use strict'
 
-const path = require ('path')
-const { pipe, flip, test, find, isNothing, I } = require ('sanctuary')
+const path    = require ('path')
+const {
+  compose,
+  find,
+  flip,
+  I,
+  isNothing,
+  K,
+  pipe,
+  test,
+}             = require ('sanctuary')
 const sniffer = require ('./lib/sniffer.js')
 
 const trace = log => x => (log (x), x)
@@ -15,43 +24,43 @@ const setMimeType = response => mimeType => {
   })
 }
 
-const middleware = (root = '', options = {}) => (request, response, next) => {
-  // console.debug (
-  //   'path', request.path,
-  //   'baseUrl', request.baseUrl,
-  //   'mountpath', request.app.mountpath,
-  //   'root', root,
-  //   path.resolve (root, (request.baseUrl || request.path).slice (1))
-  // )
+const setupSadPath = (silent, fallthrough = true) => pipe ([
+  silent ? I : trace (console.error),
+  fallthrough ? _=>{} : I,
+])
 
-  // TODO: clean up options section - move out of middleware please
+const setupOptions = (options) => ({
+  // filters :: String -> Boolean
+  filters: options.filters
+    ? pipe ([flip (test), flip (find) (options.filters), isNothing])
+    : K (false),
+  sadPath: setupSadPath (options.silent, options.fallthrough)
+})
 
-  if (options.filters) {
-    // find_ :: String a -> Maybe b
-    const find_ = pipe ([
-      flip (test),
-      flip (find) (options.filters),
+const middleware = (root = '', options = {}) => {
+  const { filters, sadPath } = setupOptions (options)
+
+  return (request, response, next) => {
+    // console.debug (
+    //   'path', request.path,
+    //   'baseUrl', request.baseUrl,
+    //   'mountpath', request.app.mountpath,
+    //   'root', root,
+    //   path.resolve (root, (request.baseUrl || request.path).slice (1))
+    // )
+
+    if (filters (request.path)) return next ()
+
+    const happyPath = pipe ([
+      setMimeType (response),
+      next,
     ])
 
-    if (isNothing (find_ (request.path))) {
-      return next ()
-    }
+    sniffer
+      (compose (next) (sadPath))
+      (happyPath)
+      (path.resolve (root, (request.baseUrl || request.path).slice (1)))
   }
-
-  let sadPath = I
-  if (!options.silent) sadPath = trace (console.error)
-  if (options.fallthrough !== false) sadPath = pipe ([sadPath, _=>{}, next])
-  else sadPath = pipe ([sadPath, next]) // forward error
-
-  const happyPath = pipe ([
-    setMimeType (response),
-    next,
-  ])
-
-  sniffer
-    (sadPath)
-    (happyPath)
-    (path.resolve (root, (request.baseUrl || request.path).slice (1)))
 }
 
 module.exports = middleware
