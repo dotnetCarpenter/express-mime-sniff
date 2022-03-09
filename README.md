@@ -19,6 +19,17 @@ $ npm install express-mime-sniff --production --save
 checking. To disable type checking, and gain performance, you must set
 the environment variable: `NODE_ENV=production`.
 
+# Benchmark
+
+Currently, version `0.4.0` is 68% slower than using [`express.static`][express.static].
+
+Requests/sec: 236 vs Requests/sec: 76 ~ 68% slower.
+
+1. `cd benchmark`
+2. `./server.mjs`
+3. In another terminal run
+   1. `./express-only.sh`
+   2. `./mimesniff.sh`
 
 # API
 

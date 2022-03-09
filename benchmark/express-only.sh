@@ -1,0 +1,1 @@
+./hey_linux_amd64 http://localhost:3101/fake.jpg
