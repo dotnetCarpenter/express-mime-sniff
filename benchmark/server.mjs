@@ -22,3 +22,8 @@ function setupServer (port, middlewares = []) {
 
 	return app.listen (port)
 }
+
+export {
+	mimeSniffServer,
+	staticServer
+}

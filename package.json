@@ -32,6 +32,7 @@
     "sanctuary": "^3.1.0"
   },
   "devDependencies": {
+    "heapdump": "^0.3.15",
     "express": "^4.17.1",
     "jasmine": "^3.8.0"
   }
