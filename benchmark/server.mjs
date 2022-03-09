@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// disable sanctuary type-checking and make express run faster too
+process.env.NODE_ENV = 'production'
+
 import path              from 'path'
 import { fileURLToPath } from 'url'
 import express           from 'express'

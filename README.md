@@ -23,7 +23,11 @@ the environment variable: `NODE_ENV=production`.
 
 Currently, version `0.4.0` is 68% slower than using [`express.static`][express.static].
 
-Requests/sec: 236 vs Requests/sec: 76 ~ 68% slower.
+Requests/sec: 302.4 vs Requests/sec: 68.7 ~ 77% slower.
+
+```
+(68.7 - 302.4) / 302.4 * 100 = -77.28
+```
 
 1. `cd benchmark`
 2. `./server.mjs`

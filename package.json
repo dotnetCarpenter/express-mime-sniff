@@ -19,7 +19,8 @@
     "test:watch": "watch -c npm test -- --color",
     "test:unit": "jasmine spec/unit-test/*.js",
     "test:functional": "jasmine spec/functional-test/*.js",
-    "test:integration": "jasmine spec/integration-test/*.mjs"
+    "test:integration": "jasmine spec/integration-test/*.mjs",
+    "benchmark": "echo \"Error: no benchmark helper yet\" && exit 1"
   },
   "keywords": [],
   "author": "",
