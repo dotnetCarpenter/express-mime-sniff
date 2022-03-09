@@ -21,7 +21,7 @@ the environment variable: `NODE_ENV=production`.
 
 # Benchmark
 
-Currently, version `0.4.0` is 68% slower than using [`express.static`][express.static].
+Currently, version `0.4.0` is 77% slower than using [`express.static`][express.static].
 
 Requests/sec: 302.4 vs Requests/sec: 68.7 ~ 77% slower.
 
