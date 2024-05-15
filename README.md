@@ -37,7 +37,7 @@ Requests/sec: 302.4 vs Requests/sec: 68.7 ~ 77% slower.
 
 # API
 
-Version: `0.4.0`
+Version: `0.4.1`
 
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)
@@ -46,7 +46,7 @@ Version: `0.4.0`
   - [options.silent](#optionssilent)
 - [sniffer](#sniffer)
   - [wrap sniffer in Promise](#wrap-sniffer-in-promise)
-- [*nix file program](#nix-file-program)
+- [\*nix file program](#nix-file-program)
 
 -------------------------------------------------------------------------------
 
