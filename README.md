@@ -29,15 +29,19 @@ Requests/sec: 302.4 vs Requests/sec: 68.7 ~ 77% slower.
 (68.7 - 302.4) / 302.4 * 100 = -77.28
 ```
 
+`npm run benchmark`
+
+OR
+
 1. `cd benchmark`
 2. `./server.mjs`
 3. In another terminal run
-   1. `./express-only.sh`
-   2. `./mimesniff.sh`
+   1. `./benchmark-express-static`
+   2. `./benchmark-mime-sniff`
 
 # API
 
-Version: `0.4.1`
+Version: `0.5.0`
 
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)

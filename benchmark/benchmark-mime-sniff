@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+
+PORT=3100
+[[ $OSTYPE == 'darwin'* ]] && OS=darwin || OS=linux
+# https://github.com/rakyll/hey
+HEY_PROGRAM="./hey_${OS}_amd64"
+
+echo "************** BENCHMARKING MIME-SNIFF **************"
+
+$HEY_PROGRAM -n 1000 http://localhost:$PORT/fake.jpg

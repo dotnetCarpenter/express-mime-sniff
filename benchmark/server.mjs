@@ -12,8 +12,8 @@ const __dirname = path.dirname( fileURLToPath (import.meta.url))
 const ROOT_PATH = path.resolve (__dirname, '../spec/fixtures/')
 const PORT = 3100
 
-const mimeSniffServer = setupServer (PORT, [middleware (ROOT_PATH), express.static (ROOT_PATH)])
 const staticServer    = setupServer (PORT + 1, [express.static (ROOT_PATH)])
+const mimeSniffServer = setupServer (PORT, [middleware (ROOT_PATH), express.static (ROOT_PATH)])
 
 function setupServer (port, middlewares = []) {
 	const app = express ()
@@ -22,6 +22,7 @@ function setupServer (port, middlewares = []) {
 
 	return app.listen (port)
 }
+
 
 export {
 	mimeSniffServer,
