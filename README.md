@@ -41,8 +41,6 @@ OR
 
 # API
 
-Version: `0.5.0`
-
 - [middleware](#middleware)
   - [serving content from another directory](#serving-content-from-another-directory)
   - [options.filters](#optionsfilters)

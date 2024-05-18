@@ -1,6 +1,6 @@
 {
   "name": "express-mime-sniff",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "express-mime-sniff is a middleware for express, setting HTTP `Content-Type` headers for files by utilizing a *nix `file` program, available on your system.",
   "types": "index.d.ts",
   "files": [
@@ -20,7 +20,7 @@
     "test:unit": "jasmine spec/unit-test/*.js",
     "test:functional": "jasmine spec/functional-test/*.js",
     "test:integration": "jasmine spec/integration-test/*.mjs",
-    "benchmark": "node ./benchmark/server.mjs & (cd benchmark && sleep 2 && ./express-only.sh && ./mimesniff.sh && kill $(lsof -ti :3100))"
+    "benchmark": "node ./benchmark/server.mjs & (cd benchmark && sleep 2 && ./benchmark-express-static && ./benchmark-mime-sniff && kill $(lsof -ti :3100))"
   },
   "keywords": [],
   "author": "",
