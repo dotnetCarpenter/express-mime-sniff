@@ -1,5 +1,7 @@
 # express-mime-sniff
 
+![Github CI](https://github.com/dotnetCarpenter/express-mime-sniff/actions/workflows/node.js.yml/badge.svg)
+
 
 **express-mime-sniff** is an [express](http://expressjs.com/) middleware for
 setting HTTP `Content-Type` headers for files by utilizing a *nix `file`
